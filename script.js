@@ -31,9 +31,18 @@ start.addEventListener("click", function () {
 })
 
 
+
 function startQuestions() {
-    let el = document.querySelector('.container')
-    el.textContent = ("Hello World");
+    if (startQuestions) {
+        document.getElementById('content').style.visibility = 'hidden';
+    }
+    for (let i = 0; i < questions[0].choices.length; i++) {
+
+        const btn = document.createElement("BUTTON");   // Create a <button> element
+        btn.textContent = "Word";                       // Insert text from choices 
+        document.h1.appendChild(btn);                 //Append 
+
+    }
 
 }
-
+console.log(questions[0].title);
