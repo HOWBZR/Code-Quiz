@@ -73,38 +73,62 @@ $(document).ready(function () {
         button0.addEventListener("click", function () {
             if ($(this).text === questions[0].answer) {
                 correct++;
+                questionOne();
             }
             else {
                 incorrect++;
+                questionOne();
             }
         });
         button1.addEventListener("click", function () {
             if ($(this).text === questions[0].answer) {
                 correct++;
+                questionOne();
             }
             else {
                 incorrect++;
+                questionOne();
             }
         });
         button2.addEventListener("click", function () {
             if ($(this).text() === questions[0].answer) {
                 correct++;
+                questionOne();
             }
             else {
                 incorrect++;
+                questionOne();
             }
         });
         button3.addEventListener("click", function () {
             if ($(this).text === questions[0].answer) {
                 correct++;
+                questionOne();
             }
             else {
                 incorrect++;
+                questionOne();
             }
         });
     }
 });
+/*function questionOne() {
+    if (questionOne) {
+        document.getElementById('showonstart').textContent = '';
+    }
+    const questionTwo = document.createElement("h2");
+    questionTwo.textContent = questions[1].title;
+    fqcontent.prepend(questionTwo);
 
+    for (let i = 0; i < questions[1].choices.length; i++) {
+
+        const btn = document.createElement("BUTTON");   // Create a <button> element
+        btn.id = 'button' + i;
+        btn.classList.add('btnList');
+        realButtonContent.appendChild(btn);
+    }
+    fillQuestions();
+}*/
 
 
 
