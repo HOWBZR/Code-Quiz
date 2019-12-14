@@ -16,3 +16,8 @@ h1{
 body{
     background-color: gainsboro;
 }
+
+.buttons {
+    text-align: center;
+    display: none;
+}

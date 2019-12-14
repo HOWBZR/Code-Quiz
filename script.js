@@ -1,17 +1,23 @@
+$('document').ready(function () {
 
-$(document).ready(function () {
-    
-    const start = document.getElementById("start");
+    let questionBoxEl = document.getElementById('questions');
+    let allButtionsEl = document.getElementById('buttons');
+    let startButtonEl = document.getElementById('startbutton');
+    let button0 = document.getElementById('button0');
+    let button1 = document.getElementById('button1');
+    let button2 = document.getElementById('button2');
+    let button3 = document.getElementById('button3');
+    let calculatedScore = document.getElementById('final-score');
     let timerEl = document.getElementById("time");
-    let fqcontent = document.getElementById('firstquestion');
-    let buttoncontent = document.getElementById('buttoncontent');
-    let realButtonContent = document.getElementById('first');
+    let lastMessage = document.getElementById("last-message");
+    correct = 0;
+    incorrect = 0;
+    currentQuestion = 0;
+    currentChoices = 0;
+    secondsLeft = 75;
 
-    let currentQuestion = 0;
-    let correct = 0;
-    let incorrect = 0;
-    
-    var questions = [
+
+    let questions = [
         {
             title: "Commonly used data types DO NOT include:",
             choices: ["strings", "booleans", "alerts", "numbers"],
@@ -22,15 +28,27 @@ $(document).ready(function () {
             choices: ["quotes", "curly brackets", "parentheses", "square brackets"],
             answer: "parentheses"
         },
-        
-    ];
-    
-    
-    secondsLeft = 75;
+        {
+            title: "What does HTML stand for?",
+            choices: ["Hyper Train Media Lama", "Hold tight Ma Lasagana", "Here thee mother lotus", "Hyper Text Markup Language"],
+            answer: "parentheses"
+        },
+        {
+            title: "What does HTML stand for?",
+            choices: ["Hyper Train Media Lama", "Hold tight Ma Lasagana", "Here thee mother lotus", "Hyper Text Markup Language"],
+            answer: "parentheses"
+        },
 
-    // Timer function and starts questions function
-    start.addEventListener("click", function () {
-    
+    ];
+
+
+
+    $('#startbutton').on('click', function () {
+        $('#coding').hide();
+        $('#pcontent').hide();
+        $('#startbutton').hide();
+        $('.buttons').show();
+
         const timeLeft = setInterval(function () {
             secondsLeft--;
             timerEl.textContent = "You have " + secondsLeft + " seconds left.";
@@ -38,97 +56,70 @@ $(document).ready(function () {
                 clearInterval(timeLeft);
             }
         }, 1000)
-        startQuestions();
-    });
 
+        questionBoxEl.textContent = questions[0].title
+        button0.textContent = questions[0].choices[0];
+        button1.textContent = questions[0].choices[1];
+        button2.textContent = questions[0].choices[2];
+        button3.textContent = questions[0].choices[3];
+    })
 
-    // creates new element with question and button answers
-    function startQuestions() {
-        if (startQuestions) {
-            document.getElementById('showonstart').textContent = '';
+    $('.btn').on('click', function () {
+
+        if (this.innerHTML === questions[currentQuestion].answer) {
+            currentQuestion++;
+            let questionSelector = questions[currentQuestion].title
+            correct++;
+
+            //let choiceSelector = questions[currentQuestion].choices[currentChoices];
+            //this.textContent === choiceSelector;
+            //for (let i = 0; i < questions[currentQuestion].choices; i++) {
+            //$('#button')[i].textContent = questions[currentQuestion].choices[i];
+            //}
+
+            button1.textContent = questions[currentQuestion].choices[1];
+            button2.textContent = questions[currentQuestion].choices[2];
+            button3.textContent = questions[currentQuestion].choices[3];
+            currentChoices++;
+
+            questionBoxEl.textContent = questionSelector;
         }
-        const questionOne = document.createElement("h2");
-        questionOne.textContent = questions[0].title;
-        fqcontent.prepend(questionOne);
-    
-        for (let i = 0; i < questions[0].choices.length; i++) {
-        
-            const btn = document.createElement("BUTTON");   // Create a <button> element
-            btn.id = 'button' + i;
-            btn.classList.add('btnList');
-            realButtonContent.appendChild(btn);
+        else if (this.innerHTML !== questions[currentQuestion].answer) {
+            currentQuestion++;
+            incorrect++;
+            secondsLeft -= 20;
+            let questionSelector = questions[currentQuestion].title;
+
+            //for (let i = 0; i < questions[currentQuestion].choices; i++) {
+            // $('#button')[i].textContent = questions[currentQuestion].choices[i];
+            //}
+
+            button0.textContent = questions[currentQuestion].choices[0];
+            button1.textContent = questions[currentQuestion].choices[1];
+            button2.textContent = questions[currentQuestion].choices[2];
+            button3.textContent = questions[currentQuestion].choices[3];
+            questionBoxEl.textContent = questionSelector;
+
         }
-        //btn.textContent = "Word";                       // Insert text from choices 
-        fillQuestions();
-    
-    
+        finish();
+    })
+
+    function finish() {
+        if (currentQuestion > 2) {
+            questionBoxEl.textContent = "Nice work! You finished with a high score of ";
+            calculatedScore.textContent = secondsLeft * 2;
+            let score = secondsLeft * 2;
+            $('.buttons').hide();
+            lastMessage.textContent = "Please enter your initials below:"
+            $form = $("<form></form>");
+            $form.append('<input type="form" value="form">');
+            $('#final-score').append($form);
+
+        }
     }
 
-    function fillQuestions() {
-        document.getElementById('button0').textContent = questions[currentQuestion].choices[0];
-        document.getElementById('button1').textContent = questions[currentQuestion].choices[1];
-        document.getElementById('button2').textContent = questions[currentQuestion].choices[2];
-        document.getElementById('button3').textContent = questions[currentQuestion].choices[3];
+})
 
-        button0.addEventListener("click", function () {
-            if ($(this).text === questions[0].answer) {
-                correct++;
-                questionOne();
-            }
-            else {
-                incorrect++;
-                questionOne();
-            }
-        });
-        button1.addEventListener("click", function () {
-            if ($(this).text === questions[0].answer) {
-                correct++;
-                questionOne();
-            }
-            else {
-                incorrect++;
-                questionOne();
-            }
-        });
-        button2.addEventListener("click", function () {
-            if ($(this).text() === questions[0].answer) {
-                correct++;
-                questionOne();
-            }
-            else {
-                incorrect++;
-                questionOne();
-            }
-        });
-        button3.addEventListener("click", function () {
-            if ($(this).text === questions[0].answer) {
-                correct++;
-                questionOne();
-            }
-            else {
-                incorrect++;
-                questionOne();
-            }
-        });
-    }
-});
-/*function questionOne() {
-    if (questionOne) {
-        document.getElementById('showonstart').textContent = '';
-    }
-    const questionTwo = document.createElement("h2");
-    questionTwo.textContent = questions[1].title;
-    fqcontent.prepend(questionTwo);
-
-    for (let i = 0; i < questions[1].choices.length; i++) {
-
-        const btn = document.createElement("BUTTON");   // Create a <button> element
-        btn.id = 'button' + i;
-        btn.classList.add('btnList');
-        realButtonContent.appendChild(btn);
-    }
-    fillQuestions();
-}*/
 
 
 
