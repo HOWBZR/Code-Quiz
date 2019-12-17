@@ -10,12 +10,13 @@ $('document').ready(function () {
     let calculatedScore = document.getElementById('final-score');
     let timerEl = document.getElementById("time");
     let lastMessage = document.getElementById("last-message");
+    let initials = document.getElementById('initials');
     correct = 0;
     incorrect = 0;
     currentQuestion = 0;
     currentChoices = 0;
     secondsLeft = 75;
-
+    $('#initials').hide();
 
     let questions = [
         {
@@ -70,13 +71,7 @@ $('document').ready(function () {
             currentQuestion++;
             let questionSelector = questions[currentQuestion].title
             correct++;
-
-            //let choiceSelector = questions[currentQuestion].choices[currentChoices];
-            //this.textContent === choiceSelector;
-            //for (let i = 0; i < questions[currentQuestion].choices; i++) {
-            //$('#button')[i].textContent = questions[currentQuestion].choices[i];
-            //}
-
+            //start button content change
             button1.textContent = questions[currentQuestion].choices[1];
             button2.textContent = questions[currentQuestion].choices[2];
             button3.textContent = questions[currentQuestion].choices[3];
@@ -89,31 +84,34 @@ $('document').ready(function () {
             incorrect++;
             secondsLeft -= 20;
             let questionSelector = questions[currentQuestion].title;
-
-            //for (let i = 0; i < questions[currentQuestion].choices; i++) {
-            // $('#button')[i].textContent = questions[currentQuestion].choices[i];
-            //}
-
+            //start button content change
             button0.textContent = questions[currentQuestion].choices[0];
             button1.textContent = questions[currentQuestion].choices[1];
             button2.textContent = questions[currentQuestion].choices[2];
             button3.textContent = questions[currentQuestion].choices[3];
             questionBoxEl.textContent = questionSelector;
-
         }
         finish();
     })
 
     function finish() {
         if (currentQuestion > 2) {
-            questionBoxEl.textContent = "Nice work! You finished with a high score of ";
+            questionBoxEl.textContent = "Nice work! You finished with a high score of: ";
             calculatedScore.textContent = secondsLeft * 2;
             let score = secondsLeft * 2;
             $('.buttons').hide();
             lastMessage.textContent = "Please enter your initials below:"
-            $form = $("<form></form>");
-            $form.append('<input type="form" value="form">');
-            $('#final-score').append($form);
+            $form = $("<form></form>").score;
+            $('#initials').show();
+
+            initials.addEventListener('click', function () {
+                let scoreInput = score.valueOf();
+                localStorage.setItem('scoreInput');
+
+
+            })
+            // $form.append('<input type="form" value="form">');
+            //$('#final-score').append($form);
 
         }
     }
